@@ -5,6 +5,10 @@ const cors = require('cors');
 
 const app = express();
 
+app.get('/', (req, res) => {
+  res.send('Meu backend está rodando com sucesso na Vercel! 🚀');
+});
+
 app.use(cors());
 app.use(express.json());
 
