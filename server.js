@@ -5,10 +5,6 @@ const cors = require('cors');
 
 const app = express();
 
-app.get('/', (req, res) => {
-  res.send('Meu backend está rodando com sucesso na Vercel! 🚀');
-});
-
 app.use(cors());
 app.use(express.json());
 
@@ -25,6 +21,12 @@ const investimentosRoutes = require('./src/routes/investimentos.routes');
 const reservasEmergenciaRoutes = require('./src/routes/reservasEmergencia.routes');
 const movimentacoesRoutes = require('./src/routes/movimentacoes.routes');
 
+app.get('/', (req, res) => {
+  res.json({
+    mensagem: 'API EducaFinança funcionando!'
+  });
+});
+
 app.use('/usuarios', usuariosRoutes);
 app.use('/assinaturas', assinaturasRoutes);
 app.use('/cursos', cursosRoutes);
@@ -38,13 +40,12 @@ app.use('/investimentos', investimentosRoutes);
 app.use('/reservasEmergencia', reservasEmergenciaRoutes);
 app.use('/movimentacoes', movimentacoesRoutes);
 
-app.get('/', (req, res) => {
-    res.json({
-        mensagem: 'API EducaFinança funcionando!'
-    });
-});
+if (require.main === module) {
+  const port = process.env.PORT || 3000;
+  app.listen(port, () => {
+    console.log(`Servidor rodando na porta ${port}`);
+  });
+}
 
-app.listen(3000, () => {
-    console.log('Servidor rodando na porta 3000');
-});
+module.exports = app;
 
